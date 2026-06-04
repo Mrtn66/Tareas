@@ -1,0 +1,23 @@
+void setup() {
+  pinMode(4, OUTPUT);  
+  pinMode(5, OUTPUT);  
+
+ 
+  digitalWrite(4, HIGH);     //con esto los 2 leds al inicio estan apagados hasta empezar el loop
+  digitalWrite(5, HIGH);
+}
+
+void loop() {
+ 
+  digitalWrite(5, LOW);     //prende el led rojo 
+  digitalWrite(4, HIGH);    //apaga el led verde
+  delay(1000);               //por un tiempo de 1seg
+
+  digitalWrite(5, HIGH);    //forzar a que el led rojo se apague
+
+  digitalWrite(4, LOW);     //prende el led verde
+  delay(2000);               //por 2 seg
+
+  
+  digitalWrite(4, HIGH);       //forzamos a que se apague el led verde
+}
