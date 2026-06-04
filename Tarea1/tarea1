@@ -1,0 +1,10 @@
+void setup() {
+  pinMode(4, OUTPUT);  //se setean que los leds rojo y verde son señal de salida
+  pinMode(5, OUTPUT);  
+
+  digitalWrite(4, LOW);   //se deja el led verde encendido y el rojo apagado
+  digitalWrite(5, HIGH);  
+}
+
+void loop() {   //con el void loop, hacemos que se mantenga encendido 
+}
