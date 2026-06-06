@@ -1,0 +1,38 @@
+const int ledVerde = 4;       //se definen los pines rojo y verde
+const int ledRojo = 5;
+
+int estadoVerde = HIGH;       //se definen los estados iniciales de los leds, ambos apagados por estar en high
+int estadoRojo = HIGH;
+
+unsigned long tiempoVerde = 0;         //se definen variables de tiempo para cada led
+unsigned long tiempoRojo = 0;
+
+void setup() {
+  pinMode(ledVerde, OUTPUT);             //se dejan los pines como salida
+  pinMode(ledRojo, OUTPUT);
+}
+
+void loop() {
+
+  if (millis() - tiempoVerde >= 500) {       //se comprueba si han pasado 500milisegundos desde que cambio el estado del led verde
+    tiempoVerde = millis();                  //si el tiempo verde es igual a millis, se actualiza el tiempo verde para que vuelva a contar desde ese momento
+
+    if (estadoVerde == HIGH)          //si el estado del led verde es HIGH, se cambia a LOW para prenderlo
+      estadoVerde = LOW;
+    else
+      estadoVerde = HIGH;              //y si no se cambia a high para apagarlo
+
+    digitalWrite(ledVerde, estadoVerde);      //se escribe el estado del led en el pin para prenderlo o apagarlo
+  }
+
+  if (millis() - tiempoRojo >= 1200) {
+    tiempoRojo = millis();
+
+    if (estadoRojo == HIGH)
+      estadoRojo = LOW;
+    else
+      estadoRojo = HIGH;
+
+    digitalWrite(ledRojo, estadoRojo);
+  }
+}
