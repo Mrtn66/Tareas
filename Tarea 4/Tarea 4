@@ -1,0 +1,43 @@
+const int ledVerde = 4;
+
+unsigned long previousMillis = 0;
+const unsigned long interval = 1000;
+
+int estadoLed = HIGH;
+
+void setup() {
+  pinMode(ledVerde, OUTPUT);
+
+  digitalWrite(ledVerde, HIGH);
+
+  Serial.begin(115200);
+}
+
+void loop() {
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= interval) {
+
+    previousMillis = currentMillis;
+
+    unsigned long segundos = currentMillis / 1000;
+
+    char mensaje[50];
+
+    snprintf(
+      mensaje,
+      sizeof(mensaje),
+      "uptime: %lu segundos",
+      segundos
+    );
+
+    Serial.println(mensaje);
+
+    if (estadoLed == HIGH)
+      estadoLed = LOW;
+    else
+      estadoLed = HIGH;
+
+    digitalWrite(ledVerde, estadoLed);
+  }
+}

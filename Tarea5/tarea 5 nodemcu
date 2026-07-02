@@ -1,0 +1,34 @@
+const int ledVerde = 4;
+
+unsigned long tiempoAnterior = 0;
+const unsigned long intervalo = 5000;
+
+void setup() {
+  pinMode(ledVerde, OUTPUT);
+  digitalWrite(ledVerde, HIGH);   // LED apagado (lógica invertida)
+
+  Serial.begin(115200);
+}
+
+void loop() {
+  unsigned long tiempoActual = millis();
+
+  if (tiempoActual - tiempoAnterior >= intervalo) {
+    tiempoAnterior = tiempoActual;
+
+    // Solicita los datos al ATmega
+    Serial.println("#");
+
+    // Espera la respuesta
+    while (Serial.available() == 0);
+
+    // Lee e imprime la respuesta
+    String respuesta = Serial.readStringUntil('\n');
+    Serial.println(respuesta);
+
+    // Parpadeo de confirmación
+    digitalWrite(ledVerde, LOW);
+    delay(200);
+    digitalWrite(ledVerde, HIGH);
+  }
+}

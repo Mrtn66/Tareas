@@ -1,0 +1,59 @@
+const int ledVerde = 4;
+const int ledRojo = 5;
+
+unsigned long tiempoEnvio = 0;
+const unsigned long intervalo = 5000;
+const unsigned long timeout = 8000;
+
+bool esperandoRespuesta = false;
+
+void setup() {
+  pinMode(ledVerde, OUTPUT);
+  pinMode(ledRojo, OUTPUT);
+
+  digitalWrite(ledVerde, HIGH);
+  digitalWrite(ledRojo, HIGH);
+
+  Serial.begin(115200);
+}
+
+void loop() {
+
+  unsigned long tiempoActual = millis();
+
+  // Enviar '#' cada 5 segundos
+  if (!esperandoRespuesta && tiempoActual - tiempoEnvio >= intervalo) {
+
+    tiempoEnvio = tiempoActual;
+
+    Serial.println("#");
+
+    esperandoRespuesta = true;
+  }
+
+  // ¿Llegó respuesta?
+  if (Serial.available() > 0) {
+
+    String respuesta = Serial.readStringUntil('\n');
+
+    Serial.println(respuesta);
+
+    esperandoRespuesta = false;
+
+    digitalWrite(ledRojo, HIGH);
+
+    digitalWrite(ledVerde, LOW);
+    delay(200);
+    digitalWrite(ledVerde, HIGH);
+  }
+
+  // ¿Pasaron 8 segundos sin respuesta?
+  if (esperandoRespuesta &&
+      tiempoActual - tiempoEnvio >= timeout) {
+
+    digitalWrite(ledRojo, LOW);
+
+    esperandoRespuesta = false;
+  }
+
+}
